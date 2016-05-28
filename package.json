@@ -17,13 +17,13 @@
     "link",
     "linkify"
   ],
-  "author": "Steve Gill",
+  "author": "Caryn Tran and Steve Gill",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/stevengill/apache-jira-linkify/issues"
   },
   "homepage": "https://github.com/stevengill/apache-jira-linkify#readme",
-  "issuesURL": "https://issues.apache.org/jira/browse/",
+  "issuesURL": "https://issues.apache.org/jira/browse/CB-11329",
   "devDependencies": {
     "tape": "^4.2.2"
   }
