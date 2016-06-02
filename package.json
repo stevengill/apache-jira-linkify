@@ -17,7 +17,7 @@
     "link",
     "linkify"
   ],
-  "author": "Caryn Tran and Steve Gill",
+  "author": "Steve Gill; Caryn Tran <caryn.tran@berkeley.edu>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/stevengill/apache-jira-linkify/issues"
@@ -26,5 +26,10 @@
   "issuesURL": "https://issues.apache.org/jira/browse/CB-11329",
   "devDependencies": {
     "tape": "^4.2.2"
+  },
+  "dependencies": {
+    "char-split": "^0.2.0",
+    "join-stream": "0.0.0",
+    "regex": "^0.1.1"
   }
 }

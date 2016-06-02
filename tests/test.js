@@ -1,6 +1,11 @@
 var test = require('tape');
 var jiraLinker = require('../index');
 
+// //uncomment or move to different file for easy cmd testing: echo "test string" | node test.js
+// var streamLinkifier = require("../streamLinkifier.js");
+// process.stdin
+// 	.pipe(streamLinkifier("CB"))
+// 	.pipe(process.stdout)
 
 
 
@@ -27,7 +32,7 @@ test('single line', function (t) {
 	setTimeout(function() {
 		setUp();
 		var sh = require("shelljs");
-		fs.writeFile("test.md", "* [CB-1234] Testing line 1234", function(err) {
+		fs.writeFile("test.md", "* CB-1234 Testing line 1234", function(err) {
 		    if(err) {
 		        return t.error(err);
 		    } else{
@@ -100,7 +105,7 @@ test('calling on a file one level up', function (t) {
 		    } else{
 		    	var child_process = require('child_process');
 				child_process.spawn("mkdir", ["tmp/tmp1"], {"cwd": __dirname});
-				process.chdir("tmp1");
+				process.chdir(__dirname + "/tmp/tmp1");
 		    	jiraLinker("../test.md", function(succeeded) {
 		    		if (succeeded) {
 				    	fs.readFile("../test.md", 'utf8', function(err, contents) {
@@ -152,31 +157,6 @@ var linesOut = "* [CB-8320](https://issues.apache.org/jira/browse/CB-8320) Setti
 
 });
 
-//ToDo: Fix so that it doesn't replace not JIRA codes like CB-1234C
-//ToDo: Should this replace all instances after the first one?
-// test('two lines in one', function (t) {
-// 	var fs = require('fs');
-// 	t.plan(1);
-//  setUp();
-// 	setTimeout(function() {
-// 		fs.writeFile("test.md", "* CB-1234 Testing line 1234 CB-1234C Testing line 1234 ", function(err) {
-// 		    if(err) {
-// 		        return t.error(err);
-// 		    } else{
-// 		    	jiraLinker("test.md", function(succeeded) {
-// 		    		if (succeeded) {
-// 				    	fs.readFile("test.md", 'utf8', function(err, contents) {
-// 				    		t.equal(contents, 
-// 				    			"* CB-1234(https://issues.apache.org/jira/browse/CB-1234) Testing line 1234 CB-1234C Testing line 1234 "); 
-// 				    	});
-// 				   	} else {
-// 				   		t.fail("Error calling jiraLinker")
-// 				   	}
-// 		    	});
-// 		    }
-// 		});
-// 	}, 200); 
-// });
 
 test('clean up [NOT A TEST]', function(t) {
 	cleanUp();

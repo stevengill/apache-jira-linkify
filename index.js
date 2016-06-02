@@ -1,7 +1,7 @@
 var child_process = require('child_process');
 var path = require('path');
 var fs = require('fs');
-
+require('shelljs/global');
 
 /**
  * No return value. Rewrites any Apache Cordova RELEASENOTES.md file, replacing
@@ -26,6 +26,7 @@ module.exports = function(markdownFile, callback){
 			console.error("Expecting .md file. Got: " + markdownFile);
 			callback(false);
 		} else {
+			
 			var output = child_process.spawnSync("./linkify-bugs.sh", [cwd+"/"+markdownFile], {'cwd':__dirname, 'timeout':10000});
 			if (output.error) {
 				callback(false);
@@ -34,7 +35,6 @@ module.exports = function(markdownFile, callback){
 				console.log("Done formatting JIRA links for: " + markdownFile);
 				callback(true);
 			}
-			
 		}
 	} catch (e) {
 		console.log(cwd);
@@ -42,3 +42,10 @@ module.exports = function(markdownFile, callback){
 	    console.error("File does not exist: " + markdownFile);
 	}
 }
+
+
+//ToDo:
+//*** Add promises (or throw error)
+//** Operate on dir
+//** prefix to project as arg (optional def: CB)
+//* in coho .then
