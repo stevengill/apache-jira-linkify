@@ -24,3 +24,4 @@ linkifier.file("test.md", function(err, filePath) {});
 ```
 
 ### [GitHub](https://github.com/carynbear/apache-jira-linkify)
+https://github.com/carynbear/apache-jira-linkify
