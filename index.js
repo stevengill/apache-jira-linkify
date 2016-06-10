@@ -1,9 +1,6 @@
-var child_process = require('child_process');
 var path = require('path');
 var fs = require('fs');
-require('shelljs/global');
 var streamLinkifier = require("./streamLinkifier.js");
-var Q = require("q");
 
 module.exports.file = file;
 module.exports.folder = folder;
@@ -18,6 +15,12 @@ module.exports.folder = folder;
  * @return {none}	none
  */
 function file(markdownFile, apachePrefix, callback){
+	if (arguments.length == 2) {
+		if (typeof apachePrefix === "function") {
+			callback = apachePrefix;
+			apachePrefix = "CB";
+		}
+	}
 	apachePrefix = apachePrefix || "CB"; //optional; default = "CB"
 	callback = callback || function(error, filepath){}; //optional
 	try {
