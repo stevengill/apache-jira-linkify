@@ -1,5 +1,6 @@
 var test = require('tape');
-var jiraLinker = require('../index');
+var jiraLinker = require('../index').file;
+var jiraFolderLinker = require('../index').folder;
 
 // //uncomment or move to different file for easy cmd testing: echo "test string" | node test.js
 // var streamLinkifier = require("../streamLinkifier.js");
@@ -36,8 +37,8 @@ test('single line', function (t) {
 		    if(err) {
 		        return t.error(err);
 		    } else{
-		    	jiraLinker("test.md", function(succeeded) {
-		    		if (succeeded) {
+		    	jiraLinker("test.md", "CB", function(err, file) {
+		    		if (!err) {
 				    	fs.readFile("test.md", 'utf8', function(err, contents) {
 				    		t.equal(contents, 
 				    			"* [CB-1234](https://issues.apache.org/jira/browse/CB-1234) Testing line 1234"); 
@@ -61,8 +62,8 @@ test('one file in current folder, second file in deep folder', function (t) {
 		    if(err) {
 		        return t.error(err);
 		    } else{
-		    	jiraLinker("test.md", function(succeeded) {
-		    		if (succeeded) {
+		    	jiraLinker("test.md", "CB", function(err, file) {
+		    		if (!err) {
 				    	fs.readFile("test.md", 'utf8', function(err, contents) {
 				    		t.equal(contents, 
 				    			"* [CB-1234](https://issues.apache.org/jira/browse/CB-1234) Testing line 1234"); 
@@ -79,8 +80,8 @@ test('one file in current folder, second file in deep folder', function (t) {
 		    if(err) {
 		        return t.error(err);
 		    } else{
-		    	jiraLinker("tmp1/test.md", function(succeeded) {
-		    		if (succeeded) {
+		    	jiraLinker("tmp1/test.md", "CB", function(err) {
+		    		if (!err) {
 				    	fs.readFile("tmp1/test.md", 'utf8', function(err, contents) {
 				    		t.equal(contents, 
 				    			"* [CB-1234](https://issues.apache.org/jira/browse/CB-1234) Testing line 1234"); 
@@ -106,8 +107,8 @@ test('calling on a file one level up', function (t) {
 		    	var child_process = require('child_process');
 				child_process.spawn("mkdir", ["tmp/tmp1"], {"cwd": __dirname});
 				process.chdir(__dirname + "/tmp/tmp1");
-		    	jiraLinker("../test.md", function(succeeded) {
-		    		if (succeeded) {
+		    	jiraLinker("../test.md", "CB", function(err, file) {
+		    		if (!err) {
 				    	fs.readFile("../test.md", 'utf8', function(err, contents) {
 				    		t.equal(contents, 
 				    			"* [CB-1234](https://issues.apache.org/jira/browse/CB-1234) Testing line 1234"); 
@@ -142,8 +143,8 @@ var linesOut = "* [CB-8320](https://issues.apache.org/jira/browse/CB-8320) Setti
 		    if(err) {
 		        return t.error(err);
 		    } else{
-		    	jiraLinker("test.md", function(succeeded) {
-		    		if (succeeded) {
+		    	jiraLinker("test.md", "CB", function(err, file) {
+		    		if (!err) {
 				    	fs.readFile("test.md", 'utf8', function(err, contents) {
 				    		t.equal(contents, linesOut); 
 				    	});
@@ -156,6 +157,33 @@ var linesOut = "* [CB-8320](https://issues.apache.org/jira/browse/CB-8320) Setti
 	}, 2000); 
 
 });
+
+// Couldn't write tests :(
+// test('files in a folder', function (t) {
+// 	var fs = require('fs');
+// 	t.plan(3);
+	
+// 	setTimeout(function() {
+// 		setUp();
+// 		var child_process = require('child_process');
+// 		child_process.spawnSync("mkdir", ["tmp/tmp2"], {"cwd": __dirname});
+// 		fs.writeFileSync("tmp2/test1.md", "* [CB-1234] Testing line 1234");
+// 		fs.writeFileSync("tmp2/test2.md", "* [CB-1234] Testing line 1234");
+// 		fs.writeFileSync("tmp2/test3.md", "* [CB-1234] Testing line 1234");
+// 		jiraFolderLinker("tmp2", "CB", function(err, fileArray) {
+// 					console.log(fileArray);
+// 				    for (var i = 0; i < fileArray; i++) {
+// 							fs.readFile(fileArray[i], 'utf8', function(err, contents) {
+// 					    		t.equal(contents, 
+// 					    			"* [CB-1234](https://issues.apache.org/jira/browse/CB-1234) Testing line 1234"); 
+// 					    	});
+// 					} 
+// 		    	});
+		
+// 	}, 10000); 
+// });
+
+
 
 
 test('clean up [NOT A TEST]', function(t) {

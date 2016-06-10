@@ -30,6 +30,7 @@
   "dependencies": {
     "char-split": "^0.2.0",
     "join-stream": "0.0.0",
-    "regex": "^0.1.1"
+    "q": "^1.4.1",
+    "shelljs": "^0.7.0"
   }
 }

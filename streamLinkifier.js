@@ -24,7 +24,7 @@ function linkifier(apachePrefix) {
 		}
 	}
 	return function(word){
-		if (isPrefixAndNum(stripBrackets(word), apachePrefix+"-")) {
+		if (isPrefixAndNum(stripBrackets(word), apachePrefix.toUpperCase()+"-")) {
 			return "[" + stripBrackets(word) + "]" + "(https://issues.apache.org/jira/browse/" + stripBrackets(word) + ")";
 		} else {
 			return stripBrackets(word);
