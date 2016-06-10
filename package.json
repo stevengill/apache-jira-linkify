@@ -1,6 +1,6 @@
 {
   "name": "jira-linkify",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "module to convert markdown files with jira issues into markdown links to the apache issue tracker",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stevengill/apache-jira-linkify.git"
+    "url": "git+https://github.com/carynbear/apache-jira-linkify.git"
   },
   "keywords": [
     "jira",
@@ -20,9 +20,9 @@
   "author": "Steve Gill; Caryn Tran <caryn.tran@berkeley.edu>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/stevengill/apache-jira-linkify/issues"
+    "url": "https://github.com/carynbear/apache-jira-linkify/issues"
   },
-  "homepage": "https://github.com/stevengill/apache-jira-linkify#readme",
+  "homepage": "https://github.com/carynbear/apache-jira-linkify#readme",
   "issuesURL": "https://issues.apache.org/jira/browse/CB-11329",
   "devDependencies": {
     "tape": "^4.2.2"
