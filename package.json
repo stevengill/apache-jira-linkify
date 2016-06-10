@@ -1,6 +1,6 @@
 {
   "name": "jira-linkify",
-  "version": "2.1.1-0",
+  "version": "2.1.1",
   "description": "module to convert markdown files with jira issues into markdown links to the apache issue tracker",
   "main": "index.js",
   "scripts": {

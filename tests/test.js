@@ -37,7 +37,7 @@ test('single line', function (t) {
 		    if(err) {
 		        return t.error(err);
 		    } else{
-		    	jiraLinker("test.md", "CB", function(err, file) {
+		    	jiraLinker("test.md", function(err, file) {
 		    		if (!err) {
 				    	fs.readFile("test.md", 'utf8', function(err, contents) {
 				    		t.equal(contents, 
@@ -58,15 +58,15 @@ test('one file in current folder, second file in deep folder', function (t) {
 	
 	setTimeout(function() {
 		setUp();
-		fs.writeFile("test.md", "* [CB-1234] Testing line 1234", function(err) {
+		fs.writeFile("test.md", "* [AA-1234] Testing line 1234", function(err) {
 		    if(err) {
 		        return t.error(err);
 		    } else{
-		    	jiraLinker("test.md", "CB", function(err, file) {
+		    	jiraLinker("test.md", "AA", function(err, file) {
 		    		if (!err) {
 				    	fs.readFile("test.md", 'utf8', function(err, contents) {
 				    		t.equal(contents, 
-				    			"* [CB-1234](https://issues.apache.org/jira/browse/CB-1234) Testing line 1234"); 
+				    			"* [AA-1234](https://issues.apache.org/jira/browse/AA-1234) Testing line 1234"); 
 				    	});
 				   	} else {
 				   		t.fail("Error calling jiraLinker on current level")
