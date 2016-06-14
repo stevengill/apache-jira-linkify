@@ -26,8 +26,8 @@ function linkifier(apachePrefix) {
 		}
 	}
 	return function(word){
-		if (isPrefixAndNum(stripBrackets(word), apachePrefix.toUpperCase()+"-")) {
-			return "[" + stripBrackets(word) + "]" + "(https://issues.apache.org/jira/browse/" + stripBrackets(word) + ")";
+		if (isPrefixAndNum(strip(word), apachePrefix.toUpperCase()+"-")) {
+			return "[" + strip(word) + "]" + "(https://issues.apache.org/jira/browse/" + stripBrackets(word) + ")";
 		} else {
 			return word;
 		}
