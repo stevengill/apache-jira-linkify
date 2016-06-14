@@ -27,7 +27,7 @@ function linkifier(apachePrefix) {
 	}
 	return function(word){
 		if (isPrefixAndNum(strip(word), apachePrefix.toUpperCase()+"-")) {
-			return "[" + strip(word) + "]" + "(https://issues.apache.org/jira/browse/" + stripBrackets(word) + ")";
+			return "[" + strip(word) + "]" + "(https://issues.apache.org/jira/browse/" + strip(word) + ")";
 		} else {
 			return word;
 		}
