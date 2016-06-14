@@ -21,6 +21,7 @@ function file(markdownFile, apachePrefix, callback){
 			apachePrefix = "CB";
 		}
 	}
+	markdownFile = path.resolve(markdownFile);
 	apachePrefix = apachePrefix || "CB"; //optional; default = "CB"
 	callback = callback || function(error, filepath){}; //optional
 	try {
@@ -32,8 +33,16 @@ function file(markdownFile, apachePrefix, callback){
 			try {
 				var stream = fs.createReadStream(markdownFile).pipe(streamLinkifier(apachePrefix)).pipe(fs.createWriteStream(markdownFile+".txt"));
 				stream.on('finish', function () {
-					fs.unlink(markdownFile, function () {
-						fs.rename(markdownFile+".txt", markdownFile, function () {
+					fs.unlink(markdownFile, function (err) {
+						if (err) { 
+							callback(true, markdownFile);
+							throw err;
+						}
+						fs.rename(markdownFile+".txt", markdownFile, function (err) {
+							if (err) { 
+								callback(true, markdownFile);
+								throw err;
+							}
 							console.log("Done formatting JIRA links for: " + markdownFile);
 							callback(false, markdownFile);
 						});
@@ -67,7 +76,8 @@ function folder(dir, apachePrefix, callback) {
 	var fs = require('fs');
 	var path = require('path');
 	var counter = 0;
-	var files = []; 
+	var files = [];
+	dir = path.resolve(dir); 
 	fs.readdir(dir, 
 		function callback(err, list) {
 			if (err) {
