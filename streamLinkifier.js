@@ -5,10 +5,12 @@ var Transform = require('stream').Transform,
 
 //Helper returns a function that takes in a word and apache-linkifies it if it is linkifyable
 function linkifier(apachePrefix) {
-	//Strips brackets as necessary; will linkify [CB-XXX] OR CB-XXX
-	function stripBrackets(word) {
+	//Strips brackets and colons as necessary; will linkify [CB-XXX] OR CB-XXX: OR CB-XXX
+	function strip(word) {
 		if (word[0] == "[" && word[word.length - 1] == "]") {
 			return word.slice(1, word.length - 1);
+		} else if (word[word.length - 1] == ":") {
+			return word.slice(0, word.length - 1);
 		} else {
 			return word;
 		}
@@ -27,7 +29,7 @@ function linkifier(apachePrefix) {
 		if (isPrefixAndNum(stripBrackets(word), apachePrefix.toUpperCase()+"-")) {
 			return "[" + stripBrackets(word) + "]" + "(https://issues.apache.org/jira/browse/" + stripBrackets(word) + ")";
 		} else {
-			return stripBrackets(word);
+			return word;
 		}
 	}
 }

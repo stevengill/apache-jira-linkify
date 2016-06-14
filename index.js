@@ -72,6 +72,13 @@ function file(markdownFile, apachePrefix, callback){
  * @return {none}	none
  */
 function folder(dir, apachePrefix, callback) {
+	if (arguments.length == 2) {
+		if (typeof apachePrefix === "function") {
+			callback = apachePrefix;
+			apachePrefix = "CB";
+		}
+	}
+	apachePrefix = apachePrefix || "CB"; //optional; default = "CB"
 	callback = callback || function(error, filepathArray){}; 
 	var fs = require('fs');
 	var path = require('path');
