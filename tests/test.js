@@ -15,10 +15,7 @@ function setUp() {
 	child_process.spawnSync("rm", ["-rf", "tmp"], {"cwd": __dirname});
 	child_process.spawnSync("mkdir", ["tmp"], {"cwd": __dirname});
 	process.chdir(__dirname + "/tmp");
-	var sh = require("shelljs");
-	var cwd = sh.pwd();
-	console.log(cwd);
-}
+	}
 
 function cleanUp() {
 	var child_process = require('child_process');
@@ -29,7 +26,7 @@ function cleanUp() {
 
 test('single line', function (t) {
 	var fs = require('fs');
-	t.plan(1);
+	t.plan(3);
 	setTimeout(function() {
 		setUp();
 		var sh = require("shelljs");
@@ -42,6 +39,38 @@ test('single line', function (t) {
 				    	fs.readFile("test.md", 'utf8', function(err, contents) {
 				    		t.equal(contents, 
 				    			"* [CB-1234](https://issues.apache.org/jira/browse/CB-1234) Testing line 1234"); 
+				    	});
+				   	} else {
+				   		t.fail("Error calling jiraLinker")
+				   	}
+		    	});
+		    }
+		});
+		fs.writeFile("test1.md", "* [CB-1234] Testing line 1234", function(err) {
+		    if(err) {
+		        return t.error(err);
+		    } else{
+		    	jiraLinker("test1.md", function(err, file) {
+		    		if (!err) {
+				    	fs.readFile("test1.md", 'utf8', function(err, contents) {
+				    		t.equal(contents, 
+				    			"* [CB-1234](https://issues.apache.org/jira/browse/CB-1234) Testing line 1234"); 
+				    	});
+				   	} else {
+				   		t.fail("Error calling jiraLinker")
+				   	}
+		    	});
+		    }
+		});
+		fs.writeFile("test2.md", "* CB-10096: Upgrading to Gradle Plugin 2.1.0", function(err) {
+		    if(err) {
+		        return t.error(err);
+		    } else{
+		    	jiraLinker("test2.md", function(err, file) {
+		    		if (!err) {
+				    	fs.readFile("test2.md", 'utf8', function(err, contents) {
+				    		t.equal(contents, 
+				    			"* [CB-10096](https://issues.apache.org/jira/browse/CB-10096) Upgrading to Gradle Plugin 2.1.0"); 
 				    	});
 				   	} else {
 				   		t.fail("Error calling jiraLinker")
