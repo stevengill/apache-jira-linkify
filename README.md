@@ -1,13 +1,39 @@
-This module formats any markdown files with references to Apache Jira issues to be hyperlinks to the issue itself. 
+This module formats any markdown files with references to Apache Jira issues to be hyperlinks to the issue itself.
 
 ## Supports
-	- individual markdown files relative to current working directory
-	- folders (will format all markdown files within)
-	- any Apache JIRA prefix; default is "CB"
-	- bracketed, nonbracketed, and colon'ed Apache JIRA issues
-		- i.e "[CB-1234]" and "CB-1234" and "CB-1234:"
+- individual markdown files relative to current working directory
+- folders (will format all markdown files within)
+- streams (v2)
+- any Apache JIRA prefix; default is "CB"
+- bracketed, nonbracketed, and colon'ed Apache JIRA issues
+  - i.e "[CB-1234]" and "CB-1234" and "CB-1234:"
 
 ## Usage
+
+### Using Node Streams (v2)
+```javascript
+var linkifier = require("jira-linkify");
+var stream = require('stream');
+var transformer = linkifier.stream("CB");
+var read = new stream.Readable();
+read._read = function(){};// noop
+read.push('CB-123 this is issue number 123');
+read.push(null);
+var write = new Stream.Writable();
+var data = '';
+write._write = function(chunk, encoding, done) {
+    data += chunk.toString();
+    done();
+}
+write.on('finish', function() {
+    console.log(data);
+});
+readable.pipe(transformer).pipe(writable);
+// prints out "[CB-123](https://issues.apache.org/jira/browser/CB-123) this is issue number 123"
+
+```
+
+### Markdown File
 ```javascript
 var linkifier = require("jira-linkify");
 linkifier.file("test.md");
@@ -23,7 +49,7 @@ linkifier.file("test.md", "AA", function(err, filePath) {
 linkifier.file("test.md", function(err, filePath) {}); //default prefix is "CB"
 ```
 
-## Beta Usage (not extensively tested yet)
+### Folder of Markdown Files (Beta Usage - not extensively tested yet)
 ```javascript
 var linkifier = require("jira-linkify");
 linkifier.folder("test"); //default JIRA code prefix is "CB"
