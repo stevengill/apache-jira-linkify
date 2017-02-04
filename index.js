@@ -4,6 +4,7 @@ var streamLinkifier = require("./streamLinkifier.js");
 
 module.exports.file = file;
 module.exports.folder = folder;
+module.exports.stream = streamLinkifier;
 
 /**
  *	Takes a markdown file and replaces all instances of JIRA issue 
